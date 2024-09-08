@@ -1,9 +1,6 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "miniStore";
+include "config.php";
 
 //Creating connection
 $conn = new mysqli($servername,$username,$password, $dbname);
