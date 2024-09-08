@@ -1,0 +1,65 @@
+body {
+  position: relative;
+  top: 5rem;
+  font-family: SUSE;
+  background-color: rgb(253, 253, 253);
+}
+/* body * {
+  border: 3px solid brown;
+} */
+.head {
+  padding: 0.5rem;
+}
+.card_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.card_one {
+  width: 375px;
+}
+#image_input {
+  visibility: hidden;
+}
+.image_input_wrapper {
+  height: 9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+.image_wrapper {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: .5rem;
+}
+.image_input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.image_input_wrapper h3 {
+  position: relative;
+  top: 1.8rem;
+  text-align: center;
+  cursor: pointer;
+}
+.images_wrap{
+    position: relative;
+}
+.close {
+  position: absolute;
+  left: 90%;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.upload {
+  font-weight: 300;
+  font-size: 3rem;
+  position: relative;
+  top: 2rem;
+  background-color: rgb(231, 231, 231);
+  border-radius: 8px;
+}

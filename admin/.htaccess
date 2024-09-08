@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteRule ^admin$ admin.html
+
+RewriteRule ^dashboard$ dashboard.php
+RewriteRule ^orders$ orders.php
+RewriteRule ^index$ orders.html
+RewriteRule ^product$ product.html
+RewriteRule ^add-product$ add-product.php

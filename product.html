@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product</title>
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/product.css" />
+  </head>
+  <body>
+    <div class="product_wrapper">
+      <div class="product_image_wrapper">
+        <div class="first_image">
+          <img src="#" alt="image" sizes="" srcset="" id="f_image" />
+        </div>
+        <div class="prec_image_wrapper" id="s_image_wrapper">
+          <!-- <img  src="images/perfectx1.jpg" alt="image"s />
+          <img src="images/perfectx2.jpg" alt="" />
+          <img src="images/perfectx3.png" alt="" /> -->
+        </div>
+      </div>
+      <h1 id="product_name"></h1>
+      <div class="price_wrapper">
+        <h4 class="amount" id="amount">GHC350</h4>
+        <hr
+          style="
+            height: 1.5rem;
+            position: absolute;
+            left: 6.5rem;
+            transform: translateX(-0.5rem);
+            opacity: 0.5;
+          "
+        />
+        <a
+          href="#use"
+          style="
+            color: black;
+            opacity: 0.7;
+            font-size: 0.9rem;
+            position: absolute;
+            left: 7rem;
+          "
+          >How to use?</a
+        >
+      </div>
+      <div class="order_wrapper">
+        <div class="increment_wrapper">
+          <span class="minus" id="minus">-</span>
+          <span class="number" id="number">1</span>
+          <span class="add" id="add">+</span>
+        </div>
+        <button class="buy_now" onclick="showPaymentWrapper(event)">
+          Buy Now
+        </button>
+      </div>
+      <hr style="margin: 2rem 0rem; opacity: 0.3" />
+      <div class="details">
+        <h4 class="head">
+          Description
+          <span
+            class="shrink"
+            style="float: right; font-size: 1.1rem; cursor: pointer"
+            >&mdash;</span
+          >
+        </h4>
+
+        <span class="description"></span>
+        <h4 class="head" id="use">
+          How to use
+          <span
+            class="shrink"
+            style="float: right; font-size: 1.1rem; cursor: pointer"
+            >&mdash;</span
+          >
+        </h4>
+
+        <span class="description"></span>
+        <h4 class="head">
+          Active ingredients
+          <span
+            class="shrink"
+            style="float: right; font-size: 1.1rem; cursor: pointer"
+            >&mdash;</span
+          >
+        </h4>
+
+        <span class="description"></span>
+      </div>
+      <hr style="margin: 2rem 0rem; opacity: 0.3" />
+    </div>
+    <div class="promo" id="promo">
+      <h3
+        style="
+          padding-left: 0.3rem;
+          position: relative;
+          top: 8px;
+          font-family: sans-serif;
+          display: inline;
+          color: red;
+        "
+      >
+        Promotion!!!
+      </h3>
+      <span
+        style="
+          float: right;
+          margin-right: 0.5rem;
+          margin-top: 0.2rem;
+          font-size: 1.1rem;
+          font-weight: 700;
+          background-color: rgb(218, 223, 223);
+          border-radius: 100%;
+          height: 2rem;
+          cursor: pointer;
+          text-align: center;
+          width: 2rem;
+          z-index: 10;
+        "
+        onclick="closePromo()"
+        >&cross;</span
+      >
+      <br />
+
+      <div class="pro">
+        <span class="buy">Buy 1: &nbsp;<span class="amount">GHC0</span></span
+        ><br />
+        <span class="buy">Buy 2: &nbsp;<span class="amount">GHC0</span></span
+        ><br />
+        <span class="buy">Buy 3:&nbsp; <span class="amount">GHC0</span></span>
+      </div>
+      <h2
+        id="timer"
+        style="
+          color: red;
+          padding-left: 1rem;
+          padding-top: 0.5rem;
+          font-size: 2rem;
+        "
+      >
+        10:23:00
+      </h2>
+      <button
+        class="buy_now"
+        onclick="showPaymentWrapper(event)"
+        style="
+          width: 10rem;
+          height: 2.5rem;
+          background-color: red;
+          margin-left: 0.2rem;
+        "
+      >
+        Buy now
+      </button>
+    </div>
+    <div class="payment_cred_wrapper" id="payment_cred_wrapper">
+      <span
+        style="
+          float: right;
+          margin-right: 0.5rem;
+          margin-top: 0.2rem;
+          font-size: 1.1rem;
+          font-weight: 700;
+          background-color: rgb(218, 223, 223);
+          border-radius: 100%;
+          height: 2rem;
+          cursor: pointer;
+          text-align: center;
+          width: 2rem;
+          z-index: 10;
+        "
+        onclick="closePayment()"
+        >&cross;</span
+      >
+      <h3
+        style="
+          font-size: 1.1rem;
+          text-align: center;
+          font-weight: 400;
+          padding: 0.6rem;
+          font-family: Helvetica;
+        "
+      >
+        Please fill in your credentials for effective delivery
+      </h3>
+      <p
+        style="
+          text-align: center;
+          font-family: Helvetica;
+          font-size: 1rem;
+          border: 2px solid rgb(216, 76, 76);
+          border-radius: 1rem;
+          padding: 0.2rem;
+          position: relative;
+          bottom: 1rem;
+        "
+      >
+        Order only when fully prepared to receive
+      </p>
+      <form id="form">
+        <label for="name">FullName</label> <br />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          pattern="^[A-Za-z\s]+$"
+          title="Only letters allowed"
+          required
+        /><br /><br />
+        <label for="number">Phone Number</label> <br />
+        <input
+          name="number"
+          type="text"
+          inputmode="numeric"
+          required
+          minlength="10"
+          maxlength="10"
+          pattern="0\d{9,}"
+          title="Please enter at least 10 numbers starting with 0"
+        /><br /><br />
+        <label for="address">Address</label> <br />
+        <input name="address" type="text" required /><br /><br />
+        <label for="price_rate">Quantity</label><br />
+        <select name="price_rate" id="price_rate" required>
+          <option value="1" class="opt">Buy one: GHC200</option>
+          <option value="2" class="opt">Buy two: GHC200</option>
+          <option value="3" class="opt">Buy three: GHC200</option>
+        </select>
+        <button
+          type="submit"
+          class="buy_now"
+          style="
+            top: 1.9rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+          "
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+    <img
+      id="success"
+      style="
+        position: fixed;
+        z-index: 25;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+      "
+    />
+    <div
+      class="success_wrapper"
+      id="success_wrapper"
+      style="
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        z-index: 25;
+        left: 50%;
+        top: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: translateX(-50%) translateY(-50%) scale(0);
+        transition: 0.3s transform;
+
+        transform-origin: bottom;
+        background-color: white;
+        font-family: Arial, Helvetica, sans-serif;
+      "
+    >
+      <img
+        src="resources/checked.png"
+        alt="Success image"
+        style="width: 5.5rem; position: relative; top: 3rem"
+      />
+
+      <h3 style="margin-top: 4rem; font-size: 1.3rem" id="order_id">
+        Order #2236
+      </h3>
+      <span style="position: relative; bottom: 1rem"
+        >Your order will be delivered to you within 24 hours</span
+      >
+      <a
+        href="index.html#products"
+        style="
+          color: rgb(52, 97, 247);
+          text-align: center;
+          text-decoration: none;
+          position: relative;
+          bottom: 0.5rem;
+          font-size: 0.9rem;
+        "
+        ;
+        >Continue Shopping &RightArrowBar;</a
+      >
+      <hr style="margin: 1.5rem 0rem; opacity: 0.3; width: 90%" />
+      <div class="order_summary_wrapper" style="height: 20rem; width: 100%">
+        <span style="margin-left: 1rem">Order Summary</span>
+        <div class="sub_s">
+          <h4>Product</h4>
+          <span id="sum_product_name">Lorem, ipsum dolor. X3</span>
+        </div>
+        <div class="sub_s">
+          <h4>SubTotal</h4>
+          <span id="sum_price">GHC 50.00</span>
+        </div>
+        <div class="sub_s">
+          <h4>Location</h4>
+          <span id="sum_location">Lorem ipsum dolor sit.</span>
+        </div>
+        <button class="okayBtn" onclick="window.location.href = 'index.html';">
+          Ok
+        </button>
+      </div>
+    </div>
+  </body>
+  <footer>
+    <div class="footer_wrapper">
+      <div class="footer_info">
+        <span>LOGO</span>
+        <div class="social">
+          <ul>
+            <li>facebook</li>
+            <li>whatsapp</li>
+            <li>phone</li>
+          </ul>
+        </div>
+      </div>
+      <span style="position: relative; left: 30%">
+        &copy; All Rights Reserved
+      </span>
+    </div>
+  </footer>
+
+  <script src="script/product.js"></script>
+</html>

@@ -1,0 +1,246 @@
+html{
+    scroll-behavior: smooth;
+}
+
+.first_image {
+  background-color: rgb(248, 242, 234);
+  height: 24rem;
+  border-radius: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.first_image img {
+  width: 23rem;
+}
+.prec_image_wrapper {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  height: 21rem;
+}
+.prec_image_wrapper img {
+  width: 17rem;
+  height: 18rem;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  margin-right: 1rem;
+  /* box-shadow: 1px 1px 5px black; */
+  margin-bottom: 1rem;
+}
+h1 {
+  font-size: 1.6rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.amount {
+  display: inline;
+  color: rgb(11, 180, 11);
+  border: 2px solid rgb(11, 180, 11);
+  padding: 0.2rem;
+  border-radius: 0.7rem;
+}
+.price_wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  bottom: 1rem;
+}
+.increment_wrapper {
+  background-color: rgb(226, 226, 231);
+  position: relative;
+  width: 4rem;
+  height: 2.5rem;
+  padding: 0.2rem 1.3rem;
+  border-radius: 2rem;
+  position: relative;
+  user-select: none;
+  bottom: 1rem;
+}
+.add {
+  bottom: 50%;
+  left: 100%;
+  transform: translateX(-100%) translateY(50%);
+}
+.minus {
+  bottom: 50%;
+  display: flex;
+  align-items: center;
+  right: 100%;
+  transform: translateX(100%) translateY(50%);
+  width: 6px;
+}
+.add,
+.minus {
+  background-color: white;
+  position: absolute;
+  cursor: pointer;
+  padding: 0.5rem 0.9rem;
+  border-radius: 100%;
+  font-weight: 600;
+  border: 1px solid rgb(150, 140, 140);
+}
+
+.number {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.order_wrapper {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  position: relative;
+}
+.buy_now {
+  background-color: black;
+  color: white;
+  padding: 0.5rem 1.3rem;
+  width: 14rem;
+  border: none;
+  border-radius: 4rem;
+  height: 3rem;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  bottom: 1rem;
+}
+.details {
+  display: flex;
+  flex-direction: column;
+}
+.head {
+  background-color: rgb(218, 223, 223);
+  padding: 0.5rem;
+  border-radius: 0.7rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.description {
+  padding-left: 1rem;
+  font-family: Helvetica, sans-serif;
+  opacity: 0.8;
+}
+.description::first-letter{
+  text-transform: capitalize;
+}
+.promo {
+  position: fixed;
+  z-index: 10;
+  top: 5%;
+  left: 100%;
+  /* transform: translateX(-105%); */
+  width: 20rem;
+  height: 10rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 1px 1px 6px black;
+  /* display: none; */
+  opacity: 0.9;
+  transition: 1s ease-in-out;
+}
+.pro {
+  position: absolute;
+  left: 100%;
+  display: flex;
+  flex-direction: column;
+  bottom: 50%;
+  transform: translateX(-110%) translateY(50%);
+  width: 8rem;
+  top: 5px;
+}
+.buy {
+  font-size: 0.8rem;
+  margin-top: 1rem;
+}
+.promo h3::after {
+  content: "Valid till";
+  font-size: 15px;
+  position: absolute;
+  top: 100%;
+  right: 10%;
+  color: red;
+  font-family: cursive;
+}
+.payment_cred_wrapper {
+  position: fixed;
+  top: 50%;
+  z-index: 20;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) scale(0);
+  background-color: white;
+  transition: 250ms ease-in-out;
+  transform-origin: right;
+  width: 20rem;
+  height: 33rem;
+  border-radius: 0.8rem;
+  box-shadow: 1px 1px 6px rgb(87, 84, 84);
+}
+form {
+  font-family: Arial, Helvetica, sans-serif;
+}
+form label {
+  padding-left: 0.5rem;
+}
+form input {
+  position: relative;
+  top: 0.3rem;
+  left: 0.3rem;
+  width: 90%;
+  padding: 0.3rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(184, 178, 178);
+}
+select {
+  position: relative;
+  left: 0.3rem;
+  top: 0.3rem;
+  width: 93%;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  border: 1px solid rgb(184, 178, 178);
+}
+
+.order_summary_wrapper span{
+  font-size: .9rem;
+} 
+.sub_s span{
+  position: relative;
+  bottom: 1.1rem;
+  opacity: .5;
+}
+.sub_s{
+  width: 90%;
+  position: relative;
+  padding-left: .5rem;
+  top: .5rem;
+  margin-bottom: .5rem;
+  border-radius: .6rem;
+  left: 1rem;
+  border: 1px solid rgb(189, 176, 176);
+  
+}
+.okayBtn{
+  width: 90%;
+  margin-left: 1rem;
+  height: 2.8rem;
+  background-color: black;
+  color: white;
+  position: relative;
+  top: 1.5rem;
+  border: none;
+  cursor: pointer;
+  border-radius: .5rem;
+}
+
+@keyframes fade {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
