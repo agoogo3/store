@@ -1,6 +1,9 @@
 html{
     scroll-behavior: smooth;
 }
+p,span,button{
+  user-select: none;
+}
 
 .first_image {
   background-color: rgb(248, 242, 234);
@@ -95,6 +98,11 @@ h1 {
   align-items: center;
   position: relative;
 }
+/* #form .buy_now{
+    border-radius: 2rem;
+    width: 500px;
+
+} */
 .buy_now {
   background-color: black;
   color: white;
@@ -133,7 +141,7 @@ h1 {
   left: 100%;
   /* transform: translateX(-105%); */
   width: 20rem;
-  height: 10rem;
+  height: fit-content;
   background-color: white;
   border-radius: 1rem;
   box-shadow: 1px 1px 6px black;
@@ -189,7 +197,7 @@ form input {
   top: 0.3rem;
   left: 0.3rem;
   width: 90%;
-  padding: 0.3rem;
+  padding: 0.6rem;
   border-radius: 0.5rem;
   border: 1px solid rgb(184, 178, 178);
 }
@@ -198,7 +206,7 @@ select {
   left: 0.3rem;
   top: 0.3rem;
   width: 93%;
-  padding: 0.4rem;
+  padding: 0.6rem;
   border-radius: 0.5rem;
   background-color: white;
   border: 1px solid rgb(184, 178, 178);
@@ -234,6 +242,18 @@ select {
   border: none;
   cursor: pointer;
   border-radius: .5rem;
+}
+.wrap{
+  background-color: rgb(12, 10, 10);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 50%;
+  
+  left: 50%;
+  opacity: .5;
+  z-index: 19;
+  transform: translateX(-50%) translateY(-50%) scale(0);
 }
 
 @keyframes fade {

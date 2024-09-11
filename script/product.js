@@ -14,43 +14,65 @@ const success_wrapper = document.getElementById("success_wrapper");
 const buyNow = document.getElementsByClassName("amount");
 const url = new URLSearchParams(window.location.search);
 const id = encodeURIComponent(url.get("id"));
+const wrap = document.getElementById("wrap");
+    const buyButton = document.getElementById("buy_now");
 
+wrap.onclick = () => {
+  if (
+    paymentWrapper.style.transform ==
+    "translateX(-50%) translateY(-50%) scale(1)"
+  ) {
+    paymentWrapper.style.transform =
+      "translateX(-50%) translateY(-50%) scale(0)";
+          wrap.style.transform = "translateX(-50%) translateY(-50%) scale(0)";
 
+  }
+};
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const formData = new FormData(form)
-  formData.append("id",id)
+  const formData = new FormData(form);
+  formData.append("id", id);
 
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", "./backend/response.php",true);
-  xhr.onload = ()=>{
-    if(xhr.status == 200){
-      const response = JSON.parse(xhr.responseText)
-      const productName = document.getElementById("sum_product_name");
-      productName.textContent = `${response.productName}. X${response.quantity}`
+  xhr.open("POST", "./backend/response.php", true);
+  xhr.onload = () => {
+        buyButton.textContent = "Loading...";
 
-      const sumPrice = document.getElementById("sum_price");
-      sumPrice.textContent = `GHC ${response.price}.00`
-
-      const sumLocation = document.getElementById("sum_location");
-      sumLocation.textContent = response.location + ".";
-
-      const orderId = document.getElementById("order_id");
-      orderId.textContent = `Order #${response.id}`;
+    if (xhr.status == 200) {
+      const response = JSON.parse(xhr.responseText);
       // console.log(response)
-    }else{
-      console.log("error: " + xhr.statusText)
+      // console.log(response.success);
+      if (response.success) {
+        const productName = document.getElementById("sum_product_name");
+        productName.textContent = `${response.success.productName}. X${response.success.quantity}`;
+
+        const sumPrice = document.getElementById("sum_price");
+        sumPrice.textContent = `GHC ${response.success.price}.00`;
+
+        const sumLocation = document.getElementById("sum_location");
+        sumLocation.textContent = response.success.location + ".";
+
+        const orderId = document.getElementById("order_id");
+        orderId.textContent = `Order #${response.success.id}`;
+        // console.log(response)
+      } else {
+        window.alert(response.error);
+      }
+    } else {
+      console.log("error: " + xhr.statusText);
     }
+  };
+  xhr.onprogress = ()=>{
+    buyButton.textContent = "Loading..."
   }
 
-  xhr.send(formData)
+  xhr.send(formData);
 
   // for(const [key,value] of formData.entries()){
   //   console.log(`${key} : ${value}`)
   // }
-
 
   success_wrapper.style.transform =
     "translateX(-50%) translateY(-50%) scale(1)";
@@ -78,6 +100,7 @@ for (let i = 0; i < shrink.length; i++) {
 
 function showPaymentWrapper(event) {
   let clicked = event.target;
+  wrap.style.transform = "translateX(-50%) translateY(-50%) scale(1)";
 
   let color = window.getComputedStyle(clicked).backgroundColor;
 
@@ -90,6 +113,8 @@ function showPaymentWrapper(event) {
 }
 function closePayment() {
   // console.log("hello");
+  wrap.style.transform = "translateX(-50%) translateY(-50%) scale(0)";
+
   paymentWrapper.style.transform = "translateX(-50%) translateY(-50%) scale(0)";
 }
 
@@ -171,8 +196,6 @@ function closePromo() {
 
 //Sending request and getting and handling response
 document.addEventListener("DOMContentLoaded", () => {
-  
-
   const xhr = new XMLHttpRequest();
 
   xhr.open("POST", "./backend/response.php", true);
@@ -182,77 +205,87 @@ document.addEventListener("DOMContentLoaded", () => {
   xhr.onload = () => {
     if (xhr.status == 200) {
       const response = JSON.parse(xhr.responseText);
+      console.log(response);
+      if (response.success) {
+        //Assigning the name to the database
+        const productName = (document.getElementById(
+          "product_name"
+        ).textContent = response.success.data[0].name);
 
-      //Assigning the name to the database
-      const productName = (document.getElementById("product_name").textContent =
-        response.data[0].name);
+        //Assigning descripton, how to use and ingredients
+        description[0].textContent = response.success.data[0].main_description;
+        description[1].textContent = response.success.data[0].usages;
 
-      //Assigning descripton, how to use and ingredients
-      description[0].textContent = response.data[0].main_description;
-      description[1].textContent = response.data[0].usages;
+        description[2].textContent = response.success.data[0].ingredients;
 
-      description[2].textContent = response.data[0].ingredients;
+        //Creating the pricing for the promotion buy now
 
-      //Creating the pricing for the promotion buy now
+        buyNow[1].textContent = "GHC" + response.success.data[0].price_one;
+        buyNow[2].textContent = "GHC" + response.success.data[0].price_two;
+        buyNow[3].textContent = "GHC" + response.success.data[0].price_three;
 
-      buyNow[1].textContent = "GHC" + response.data[0].price_one;
-      buyNow[2].textContent = "GHC" + response.data[0].price_two;
-      buyNow[3].textContent = "GHC" + response.data[0].price_three;
+        //Assigning the images to the div
+        const first_image = document.getElementById("f_image");
+        first_image.src = response.success.image[0][0][0];
+        const image = response.success.image[0];
+        const sec_image_wrapper = document.getElementById("s_image_wrapper");
+        for (let i = 1; i < image.length; i++) {
+          const sec_image = document.createElement("img");
+          sec_image.src = response.success.image[0][i][0];
+          sec_image_wrapper.appendChild(sec_image);
+        }
 
-      //Assigning the images to the div
-      const first_image = document.getElementById("f_image");
-      first_image.src = response.image[0][0][0];
-      const image = response.image[0];
-      const sec_image_wrapper = document.getElementById("s_image_wrapper");
-      for (let i = 1; i < image.length; i++) {
-        const sec_image = document.createElement("img");
-        sec_image.src = response.image[0][i][0];
-        sec_image_wrapper.appendChild(sec_image);
+        //Creating the pricing the item
+        const options = document.querySelectorAll(".opt");
+        amount.textContent = "GHC" + response.success.data[0].price_one;
+        options[0].textContent =
+          "Buy one: GHC" + response.success.data[0].price_one;
+        options[1].textContent =
+          "Buy two: GHC" + response.success.data[0].price_two;
+        options[2].textContent =
+          "Buy three: GHC" + response.success.data[0].price_three;
+
+        function price() {
+          if (counter == 1) {
+            amount.textContent = "GHC" + response.success.data[0].price_one;
+          } else if (counter == 2) {
+            amount.textContent = "GHC" + response.success.data[0].price_two;
+          } else {
+            amount.textContent = "GHC" + response.success.data[0].price_three;
+          }
+        }
+        //Tallying the counter with the price
+        function tallying() {
+          if (number.textContent == 1) {
+            price_rate.selectedIndex = 0;
+          } else if (number.textContent == 2) {
+            price_rate.selectedIndex = 1;
+          } else {
+            price_rate.selectedIndex = 2;
+          }
+        }
+
+        minus.addEventListener("click", () => {
+          if (counter > 1) {
+            counter--;
+            number.textContent = counter;
+            price();
+            tallying();
+          }
+        });
+        add.addEventListener("click", () => {
+          if (counter < 3) {
+            counter++;
+            number.textContent = counter;
+            price();
+            tallying();
+          }
+        });
+      } else {
+        const body = document.getElementById("body");
+        console.log(response.error);
+        body.textContent = response.error;
       }
-
-      //Creating the pricing the item
-      const options = document.querySelectorAll(".opt");
-      amount.textContent = "GHC" + response.data[0].price_one;
-      options[0].textContent = "Buy one: GHC" + response.data[0].price_one;
-      options[1].textContent = "Buy two: GHC" + response.data[0].price_two;
-      options[2].textContent = "Buy three: GHC" + response.data[0].price_three;
-
-      function price() {
-        if (counter == 1) {
-          amount.textContent = "GHC" + response.data[0].price_one;
-        } else if (counter == 2) {
-          amount.textContent = "GHC" + response.data[0].price_two;
-        } else {
-          amount.textContent = "GHC" + response.data[0].price_three;
-        }
-      }
-      //Tallying the counter with the price
-      function tallying() {
-        if (number.textContent == 1) {
-          price_rate.selectedIndex = 0;
-        } else if (number.textContent == 2) {
-          price_rate.selectedIndex = 1;
-        } else {
-          price_rate.selectedIndex = 2;
-        }
-      }
-
-      minus.addEventListener("click", () => {
-        if (counter > 1) {
-          counter--;
-          number.textContent = counter;
-          price();
-          tallying();
-        }
-      });
-      add.addEventListener("click", () => {
-        if (counter < 3) {
-          counter++;
-          number.textContent = counter;
-          price();
-          tallying();
-        }
-      });
     } else {
       console.log("Error: " + xhr.statusText);
     }

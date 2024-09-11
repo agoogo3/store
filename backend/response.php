@@ -3,6 +3,8 @@
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
 include "db.php";
+include "config.php";
+require '../twilio-php-main/src/Twilio/autoload.php';
 
 
 if (isset($_POST["name"]) && isset($_POST["number"]) && isset($_POST["address"]) && isset($_POST["price_rate"])) {
@@ -10,6 +12,7 @@ if (isset($_POST["name"]) && isset($_POST["number"]) && isset($_POST["address"])
     $number = filter_var($_POST["number"],FILTER_SANITIZE_NUMBER_INT);
     $address = filter_var($_POST["address"],FILTER_SANITIZE_SPECIAL_CHARS);
     $price_rate = filter_var($_POST["price_rate"],FILTER_SANITIZE_NUMBER_INT);
+    $err = 1;
 
     $id =  $_POST["id"];
 
@@ -20,13 +23,15 @@ if (isset($_POST["name"]) && isset($_POST["number"]) && isset($_POST["address"])
     $price;
     $order_id;
     if($stmt ==  false){
-        echo "Error: " . mysqli_error($conn);
+        $err = 0;
+        // echo "Error: " . mysqli_error($conn);
 
     }else{
         mysqli_stmt_bind_param($stmt,"i",$id);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         if(mysqli_num_rows($result) > 0){
+            $err = 1;
             while($row =  mysqli_fetch_assoc($result)){
                $p_name =  $row["name"];
                if($price_rate == 1){
@@ -41,18 +46,47 @@ if (isset($_POST["name"]) && isset($_POST["number"]) && isset($_POST["address"])
 
             $prepare = mysqli_prepare($conn, $input);
             if($prepare == false){
+                $err = 0;
                 echo "Error: ". mysqli_error($conn);
             }else{
                 mysqli_stmt_bind_param($prepare,"ssiiis",$name,$number,$id,$price_rate,$price,$address);
                 $res = mysqli_stmt_execute($prepare);
                 if(!$res){
-                    echo "Insert error: " . mysqli_error($conn);
+                    $err = 0;
+                    echo json_encode("Insert error: " . mysqli_error($conn));
                 }else{
+                    $err = 1;
                     $order_id = mysqli_insert_id($conn);
 
                 }
             }
-            echo json_encode(array("id" => $order_id,"productName" => $p_name,"price" => $price,"quantity" => $price_rate, "location" => $address ));
+            
+            $data = array("id" => $order_id,"productName" => $p_name,"price" => $price,"quantity" => $price_rate, "location" => $address );
+
+            if($err == 1){
+                try {
+                    $sid = $t_id;
+                    $token = $t_token;
+                    $client = new Twilio\Rest\Client($sid, $token);
+
+                    // Use the Client to make requests to the Twilio REST API
+                    $client->messages->create(
+                        // The number you'd like to send the message to
+                        '+233503351984',
+                        [
+                            // A Twilio phone number you purchased at https://console.twilio.com
+                            'from' => '+12566855750',
+                            // The body of the text message you'd like to send
+                            'body' => "New order from {$name}, buying {$price_rate} of {$p_name}. contact: {$number}, address: {$address}"
+                        ]
+                    );
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+                echo json_encode(array("success" => $data));
+            }else{
+                echo json_encode(array("error" => "Something went wrong, please try again"));
+            }
         
         }
 
@@ -78,6 +112,7 @@ if (isset($_POST["name"]) && isset($_POST["number"]) && isset($_POST["address"])
 if(isset($_POST["data"])){
 
     $data = array();
+    
 
     // SQL query to get products with their associated images
     $sql = "SELECT products.id, products.name, products.sec_description, product_image.image_path FROM products LEFT JOIN product_image ON products.id = product_image.product_id";
@@ -125,6 +160,7 @@ if(isset($_POST["data"])){
 
 if(isset($_POST["id"])){
     $id = $_POST["id"];
+    $err_check = 1;
 
     $sql = "SELECT * FROM products WHERE id = ?";
         
@@ -140,10 +176,13 @@ if(isset($_POST["id"])){
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         if(mysqli_num_rows($result) > 0){
+            $err_check = 1;
             while ($row = mysqli_fetch_assoc($result)) {
                 $product[] = $row;
             }
         }else{
+            $err_check = 0;
+
             $error = array("error" => "Product not found");
         }
         
@@ -159,7 +198,7 @@ if(isset($_POST["id"])){
     $stmt = mysqli_prepare($conn, $sql);
 
     if ($stmt == false) {
-        echo "Error: " . mysqli_error($conn);
+        $error = array("error" => "Error: " . mysqli_error($conn));
     } else {
 
         mysqli_stmt_bind_param($stmt, "i", $id);
@@ -176,8 +215,13 @@ if(isset($_POST["id"])){
     $product = array("data"=> $product, "image" => $images);
 
 
+    if($err_check == 1){
+        echo json_encode(array("success" => $product));
 
-    echo json_encode($product);
+    }else{
+        echo json_encode(array("error" => "Error: product not found"));
+    }
+
 
 
 }

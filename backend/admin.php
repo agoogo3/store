@@ -157,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_FILES["images"])) {
 
     if($advance == 1){
         $count = count($_FILES['images']['name']);
-        $dir = "../test/";
+        $dir = "../images/";
         $suc = 1;
 
         for ($i = 0; $i < $count; $i++) {

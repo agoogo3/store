@@ -6,8 +6,11 @@
     <title>Product</title>
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/product.css" />
+
+    
+   
   </head>
-  <body>
+  <body id="body">
     <div class="product_wrapper">
       <div class="product_image_wrapper">
         <div class="first_image">
@@ -226,6 +229,7 @@
           <option value="3" class="opt">Buy three: GHC200</option>
         </select>
         <button
+        id="buy_now"
           type="submit"
           class="buy_now"
           style="
@@ -235,7 +239,7 @@
             width: 80%;
           "
         >
-          Submit
+          Upload
         </button>
       </form>
     </div>
@@ -316,6 +320,9 @@
       </div>
     </div>
   </body>
+  <div class="wrap" id="wrap">
+
+  </div>
   <footer>
     <div class="footer_wrapper">
       <div class="footer_info">
@@ -333,6 +340,7 @@
       </span>
     </div>
   </footer>
+  
 
   <script src="script/product.js"></script>
 </html>

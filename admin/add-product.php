@@ -137,7 +137,7 @@ if (!isset($_SESSION["id"]))
                             <label for="fusage">How to use</label>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Submit</button>
+                        <button type="submit" class="btn btn-primary" id="submit" style="width: 100%;">Submit</button>
                     </form>
                 </div>
             </div>
